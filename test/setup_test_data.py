@@ -3,7 +3,10 @@ import urllib.request
 import shutil
 
 def download_example_video():
-    url = "https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4"
+    # The previous sample-video URL now returns 404. Using a small public video
+    # from filesamples.com ensures the setup step succeeds without requiring a
+    # large download.
+    url = "https://filesamples.com/samples/video/mp4/sample_640x360.mp4"
     dest_series = "series/test_rick/original.mp4"
     dest_background = "background/original.mp4"
 
