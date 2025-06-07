@@ -1,0 +1,10 @@
+streamlit
+yt-dlp
+openai-whisper
+moviepy==1.0.3
+ffmpeg-python
+tqdm
+openai
+python-dotenv
+numpy
+pillow<10
