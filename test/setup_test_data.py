@@ -3,7 +3,7 @@ import urllib.request
 import shutil
 
 def download_example_video():
-    url = "https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4"
+    url = "https://www.youtube.com/watch?v=9ZW3uzuzuhE"
     dest_series = "series/test_rick/original.mp4"
     dest_background = "background/original.mp4"
 
