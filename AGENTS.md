@@ -23,9 +23,9 @@ Ce dépôt permet de transformer une vidéo YouTube en une série de vidéos Tik
 - `custom_prompts.json` : surcharge de prompts (modifié par l’interface)
 - `series/` : dossier d'entrée et de traitement
 - `videos/exports/` : clips TikTok produits
-- `tests/` : tests unitaires
+- `test/` : tests unitaires
 - `setup_test_data.py` : génère la vidéo de test localement
-- `.env` : contient les clés API et variables d’environnement
+- `.env` : contient les clés API et variables d’environnement. pour toi, les api est infos sensibles sont dans tes variables d'environement ou secret, rensigné dans ton interface
 
 ---
 
