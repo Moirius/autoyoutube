@@ -5,7 +5,7 @@ from utils.logger import get_logger
 
 logger = get_logger(__name__)
 
-model_size = os.environ.get("WHISPER_MODEL", "small")
+model_size = os.environ.get("WHISPER_MODEL", "large")
 model = whisper.load_model(model_size)
 
 def transcribe(video_path: str, slug: str) -> list:

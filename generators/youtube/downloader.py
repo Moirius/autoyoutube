@@ -13,18 +13,29 @@ def download(youtube_url: str, slug: str) -> str:
 
     output_path = os.path.join(output_dir, "original.%(ext)s")
 
+    # ✅ Définir le chemin des cookies avant l'utilisation
+    yt_cookies_path = os.path.abspath(os.path.join("cookies", "cookies_yt.txt"))
+
     ydl_opts = {
-        'format': 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4',
+        'format': 'bv*+ba/b',
         'outtmpl': output_path,
         'merge_output_format': 'mp4',
-        'quiet': True,
         'noplaylist': True,
+        'quiet': True,
+        'source_address': '0.0.0.0',  # force IPv4
+        'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)',
+        'http_headers': {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)',
+            'Accept-Language': 'en-US,en;q=0.9'
+        },
     }
 
-    yt_cookies_path = os.path.abspath(os.path.join("cookies", "cookies_yt.txt"))
+    # ✅ Ajouter le cookiefile si dispo
     if os.path.exists(yt_cookies_path):
         ydl_opts["cookiefile"] = yt_cookies_path
         logger.info(f"🍪 Utilisation des cookies YouTube : {yt_cookies_path}")
+    else:
+        logger.warning("⚠️ Fichier cookies YouTube introuvable.")
 
     try:
         logger.info(f"📥 Téléchargement depuis : {youtube_url}")

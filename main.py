@@ -5,6 +5,7 @@ import re
 import shutil
 import argparse
 from generators.youtube import downloader, transcriber, slicer, composer, description_generator
+from generators.youtube.viral_analyzer import analyze_transcript
 from utils.logger import get_logger
 
 logger = get_logger(__name__)
@@ -27,22 +28,28 @@ def main(youtube_url, slug):
         transcript = transcriber.transcribe(video_path, slug)
         logger.info(f"📝 Transcription obtenue ({len(transcript)} segments)")
 
-        # 3. Découpe en clips
-        segments = slicer.slice_video(slug)
+        # 3. Analyse virale
+        viral_segments = analyze_transcript(transcript)
+        if not viral_segments:
+            logger.warning("⚠️ Aucun segment viral détecté, fallback sur découpe aléatoire.")
+            segments = slicer.slice_video(slug)
+        else:
+            segments = slicer.slice_video(slug, override_segments=viral_segments)
+
         logger.info(f"✂️ {len(segments)} clips générés")
 
         # 4. Génération des hooks + composition
         for idx, segment in enumerate(segments):
             part = idx + 1
-            part_filename = f"part_{part}.mp4"  # ✅ Suppression de l'underscore
+            part_filename = f"part_{part}.mp4"
             transcript_chunk = extract_transcript_for_clip(transcript, segment['start'], segment['end'])
 
-            # Hook + Caption (court format)
+            # Hook + Caption
             caption = description_generator.generate_caption(transcript_chunk, bot_id="bot1")
             description_generator.save_caption(caption, slug, part_filename)
 
-            # Copier le hook en tant que caption TikTok
-            hook_path = os.path.join("series", slug, "hooks", f"part{part}.txt")  # ✅ corrigé
+            # Copier le hook comme caption TikTok
+            hook_path = os.path.join("series", slug, "hooks", f"part_{part}.txt")
             caption_path = os.path.join("videos", "exports", slug, f"part{part}_caption.txt")
 
             os.makedirs(os.path.dirname(caption_path), exist_ok=True)

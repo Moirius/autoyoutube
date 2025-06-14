@@ -1,0 +1,12 @@
+2025-06-12 03:54:29,630 - generators.youtube.slicer - INFO - ✂️ Vidéo à découper : series\yt_test\original.mp4 (423.7 secondes)
+2025-06-12 03:54:29,630 - generators.youtube.slicer - INFO - 🎯 Découpage basé sur 6 segments viraux fournis.
+2025-06-12 03:54:34,963 - generators.youtube.slicer - INFO - 🎬 Clip viral exporté : series\yt_test\parts\part_1.mp4 (33.0s)
+2025-06-12 03:54:41,984 - generators.youtube.slicer - INFO - 🎬 Clip viral exporté : series\yt_test\parts\part_2.mp4 (41.0s)
+2025-06-12 03:54:47,343 - generators.youtube.slicer - INFO - 🎬 Clip viral exporté : series\yt_test\parts\part_3.mp4 (31.0s)
+2025-06-12 03:54:52,835 - generators.youtube.slicer - INFO - 🎬 Clip viral exporté : series\yt_test\parts\part_4.mp4 (32.0s)
+2025-06-12 03:54:58,387 - generators.youtube.slicer - INFO - 🎬 Clip viral exporté : series\yt_test\parts\part_5.mp4 (32.0s)
+2025-06-12 03:55:04,476 - generators.youtube.slicer - INFO - 🎬 Clip viral exporté : series\yt_test\parts\part_6.mp4 (34.0s)
+2025-06-12 03:55:05,104 - generators.youtube.composer - INFO - 🎬 Composition de : series\yt_test\parts\part_1.mp4
+2025-06-12 03:55:05,232 - generators.youtube.composer - INFO - 🎞️ Durée finale du clip : 33.00s
+2025-06-12 03:55:05,232 - generators.youtube.composer - INFO - 🕹️ Test fond gameplay : GTA 5 MEGA RAMP ｜ GTA GAMEPLAY for TIKTOK & YOUTUB.mp4
+2025-06-12 03:55:06,597 - generators.youtube.composer - INFO - ✅ Fond sélectionné : GTA 5 MEGA RAMP ｜ GTA GAMEPLAY for TIKTOK & YOUTUB.mp4

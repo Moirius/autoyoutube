@@ -1,0 +1,9 @@
+2025-06-12 03:36:13,302 - prompts - INFO - 📥 Prompts personnalisés chargés depuis custom_prompts.json
+2025-06-12 03:36:13,309 - __main__ - INFO - 🚀 Traitement de la vidéo : https://www.youtube.com/watch?v=OUzkSGMXXO0 (slug: yt_test)
+2025-06-12 03:36:13,309 - __main__ - ERROR - ❌ Pipeline échoué.
+Traceback (most recent call last):
+  File "D:\betisespython\blocs\youtubeauto\main.py", line 24, in main
+    video_path = downloader.download(youtube_url, slug)
+  File "D:\betisespython\blocs\youtubeauto\generators\youtube\downloader.py", line 22, in download
+    'cookiefile': yt_cookies_path if os.path.exists(yt_cookies_path) else None,
+UnboundLocalError: local variable 'yt_cookies_path' referenced before assignment

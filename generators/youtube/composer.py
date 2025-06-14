@@ -19,7 +19,7 @@ def rounded_rect_clip(width, height, radius, color=(255, 255, 255)):
 def compose_clip(slug: str, part_filename: str, part_number: int, background_dir: str = "videos/gameplay", output_dir: str = "series") -> str:
     part_path = os.path.join(output_dir, slug, "parts", part_filename)
     hook_path = os.path.join(output_dir, slug, "hooks", f"{os.path.splitext(part_filename)[0]}.txt")
-    output_path = os.path.join("videos", "exports", slug, part_filename)
+    output_path = os.path.join("videos", "exports", slug, part_filename.replace(".png", ".mp4").replace(".jpg", ".mp4"))
 
     if not os.path.exists(part_path):
         logger.error(f"❌ Vidéo introuvable : {part_path}")
@@ -34,7 +34,6 @@ def compose_clip(slug: str, part_filename: str, part_number: int, background_dir
     target_width, target_height = (360, 640) if MODE_TEST else (720, 1280)
     half_height = target_height // 2
 
-    # === Lire les paramètres personnalisés ===
     font_path = os.environ.get("FONT_PATH", "fonts/BebasNeue-Regular.ttf")
     hook_font_size = int(os.environ.get("HOOK_FONT_SIZE", 42))
     part_font_size = int(os.environ.get("PART_FONT_SIZE", 38))
@@ -48,17 +47,21 @@ def compose_clip(slug: str, part_filename: str, part_number: int, background_dir
     badge_rgb = ImageColor.getrgb(badge_color)
     hook_bg_rgb = ImageColor.getrgb(hook_bg_color)
 
-    # === Vidéo principale ===
-    main_clip = VideoFileClip(part_path).resize(height=half_height)
+    # === Vidéo principale ou image ===
+    if part_path.endswith((".jpg", ".jpeg", ".png")):
+        main_clip = ImageClip(part_path, duration=5).resize(height=half_height)
+    else:
+        main_clip = VideoFileClip(part_path).resize(height=half_height)
+
     main_clip = main_clip.crop(x_center=main_clip.w // 2, width=target_width)
     clip_duration = min(main_clip.duration, 5) if MODE_TEST else main_clip.duration
     logger.info(f"🎞️ Durée finale du clip : {clip_duration:.2f}s")
 
-    # === Fond gameplay (avec redimensionnement non déformant comme dans le 1er code) ===
-    background_files = [f for f in os.listdir(background_dir) if f.endswith(('.mp4', '.mov'))]
+    # === Fond gameplay (supporte aussi images) ===
+    background_files = [f for f in os.listdir(background_dir) if f.endswith(('.mp4', '.mov', '.jpg', '.jpeg', '.png'))]
     if not background_files:
-        logger.error("❌ Aucune vidéo de gameplay trouvée.")
-        raise RuntimeError("❌ Aucune vidéo de gameplay trouvée.")
+        logger.error("❌ Aucune vidéo/image de gameplay trouvée.")
+        raise RuntimeError("❌ Aucune vidéo/image de gameplay trouvée.")
 
     background_clip = None
     random.shuffle(background_files)
@@ -66,12 +69,18 @@ def compose_clip(slug: str, part_filename: str, part_number: int, background_dir
     for file in background_files:
         try:
             logger.info(f"🕹️ Test fond gameplay : {file}")
-            bg = VideoFileClip(os.path.join(background_dir, file)).without_audio()
-            if bg.duration < clip_duration:
-                bg = bg.loop(duration=clip_duration)
+            bg_path = os.path.join(background_dir, file)
+
+            if bg_path.endswith((".jpg", ".jpeg", ".png")):
+                bg = ImageClip(bg_path, duration=clip_duration)
             else:
-                start = random.uniform(0, bg.duration - clip_duration)
-                bg = bg.subclip(start, start + clip_duration)
+                bg = VideoFileClip(bg_path).without_audio()
+                if bg.duration < clip_duration:
+                    bg = bg.loop(duration=clip_duration)
+                else:
+                    start = random.uniform(0, bg.duration - clip_duration)
+                    bg = bg.subclip(start, start + clip_duration)
+
             bg = bg.resize(height=half_height)
             bg = bg.crop(x_center=bg.w // 2, width=target_width)
             background_clip = bg
@@ -104,13 +113,11 @@ def compose_clip(slug: str, part_filename: str, part_number: int, background_dir
     badge = CompositeVideoClip([badge_bg.set_position("center"), badge_txt.set_position("center")],
                                size=(badge_txt.w + 26, badge_txt.h + 12)).set_duration(clip_duration)
 
-    # === Groupe texte aligné ===
     group = CompositeVideoClip([
         badge.set_position((0, badge_y)),
         txt_box.set_position((badge.w + 10, hook_y))
     ], size=(badge.w + 10 + txt_box.w, max(badge.h + badge_y, txt_box.h + hook_y))).set_duration(clip_duration)
 
-    # === Composition finale ===
     final = CompositeVideoClip([stacked, group], size=(target_width, target_height)).set_duration(clip_duration)
 
     os.makedirs(os.path.dirname(output_path), exist_ok=True)

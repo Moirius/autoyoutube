@@ -1,0 +1,90 @@
+2025-06-12 03:53:31,148 - prompts - INFO - 📥 Prompts personnalisés chargés depuis custom_prompts.json
+2025-06-12 03:53:31,169 - __main__ - INFO - 🚀 Traitement de la vidéo : https://www.youtube.com/watch?v=OUzkSGMXXO0 (slug: yt_test)
+2025-06-12 03:53:34,016 - __main__ - INFO - 📁 Vidéo téléchargée : series\yt_test\original.mp4
+2025-06-12 03:53:51,874 - __main__ - INFO - 📝 Transcription obtenue (69 segments)
+2025-06-12 03:53:52,458 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 0.0s - 10.0s : score 0.30
+2025-06-12 03:53:53,020 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 10.0s - 18.0s : score 0.80
+2025-06-12 03:53:53,747 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 18.0s - 29.0s : score 0.70
+2025-06-12 03:53:54,220 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 29.0s - 39.0s : score 0.20
+2025-06-12 03:53:54,724 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 40.0s - 48.0s : score 0.50
+2025-06-12 03:53:55,518 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 48.0s - 52.0s : score 0.00
+2025-06-12 03:53:56,046 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 52.0s - 64.0s : score 0.20
+2025-06-12 03:53:56,559 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 65.0s - 69.0s : score 0.00
+2025-06-12 03:53:57,051 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 70.0s - 74.0s : score 0.00
+2025-06-12 03:53:57,677 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 77.0s - 79.0s : score 0.00
+2025-06-12 03:53:58,063 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 81.0s - 84.0s : score 0.00
+2025-06-12 03:53:58,488 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 85.0s - 86.0s : score 0.70
+2025-06-12 03:53:58,883 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 90.0s - 93.0s : score 0.50
+2025-06-12 03:53:59,274 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 95.0s - 100.0s : score 0.20
+2025-06-12 03:53:59,706 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 100.0s - 105.0s : score 0.20
+2025-06-12 03:54:00,057 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 106.0s - 111.0s : score 0.00
+2025-06-12 03:54:00,519 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 117.0s - 124.0s : score 0.20
+2025-06-12 03:54:01,346 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 124.0s - 129.0s : score 0.00
+2025-06-12 03:54:01,736 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 130.0s - 133.0s : score 0.00
+2025-06-12 03:54:02,309 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 133.0s - 140.0s : score 0.20
+2025-06-12 03:54:02,623 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 140.0s - 148.0s : score 0.00
+2025-06-12 03:54:02,977 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 149.0s - 157.0s : score 0.30
+2025-06-12 03:54:03,361 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 158.0s - 164.0s : score 0.30
+2025-06-12 03:54:03,739 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 164.0s - 170.0s : score 0.50
+2025-06-12 03:54:04,088 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 171.0s - 177.0s : score 0.20
+2025-06-12 03:54:04,431 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 177.0s - 182.0s : score 0.20
+2025-06-12 03:54:04,754 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 183.0s - 185.0s : score 1.00
+2025-06-12 03:54:05,095 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 185.0s - 186.0s : score 0.50
+2025-06-12 03:54:05,768 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 186.0s - 188.0s : score 1.00
+2025-06-12 03:54:06,097 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 191.0s - 195.0s : score 1.00
+2025-06-12 03:54:06,452 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 195.0s - 203.0s : score 0.00
+2025-06-12 03:54:06,776 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 204.0s - 214.0s : score 0.00
+2025-06-12 03:54:07,107 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 214.0s - 221.0s : score 0.20
+2025-06-12 03:54:07,527 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 221.0s - 225.0s : score 0.20
+2025-06-12 03:54:07,921 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 225.0s - 228.0s : score 0.20
+2025-06-12 03:54:08,293 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 229.0s - 235.0s : score 0.30
+2025-06-12 03:54:08,622 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 235.0s - 241.0s : score 0.00
+2025-06-12 03:54:09,028 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 241.0s - 249.0s : score 0.30
+2025-06-12 03:54:09,378 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 250.0s - 259.0s : score 0.00
+2025-06-12 03:54:10,063 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 259.0s - 264.0s : score 0.20
+2025-06-12 03:54:10,389 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 264.0s - 270.0s : score 0.50
+2025-06-12 03:54:10,754 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 270.0s - 277.0s : score 0.00
+2025-06-12 03:54:11,139 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 278.0s - 282.0s : score 0.20
+2025-06-12 03:54:11,468 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 292.0s - 296.0s : score 0.50
+2025-06-12 03:54:12,217 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 297.0s - 301.0s : score 0.00
+2025-06-12 03:54:13,811 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 302.0s - 307.0s : score 0.30
+2025-06-12 03:54:14,231 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 308.0s - 312.0s : score 0.20
+2025-06-12 03:54:14,645 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 313.0s - 316.0s : score 0.50
+2025-06-12 03:54:15,023 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 317.0s - 320.0s : score 0.20
+2025-06-12 03:54:15,454 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 327.0s - 331.0s : score 0.50
+2025-06-12 03:54:15,887 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 332.0s - 335.0s : score 0.20
+2025-06-12 03:54:16,265 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 336.0s - 337.0s : score 0.50
+2025-06-12 03:54:16,664 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 340.0s - 342.0s : score 0.50
+2025-06-12 03:54:17,108 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 343.0s - 345.0s : score 0.50
+2025-06-12 03:54:17,453 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 345.0s - 346.0s : score 0.00
+2025-06-12 03:54:17,797 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 346.0s - 348.0s : score 0.50
+2025-06-12 03:54:18,221 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 350.0s - 354.0s : score 0.20
+2025-06-12 03:54:18,607 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 357.0s - 363.0s : score 0.50
+2025-06-12 03:54:19,392 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 365.0s - 367.0s : score 0.00
+2025-06-12 03:54:19,768 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 369.0s - 371.0s : score 0.20
+2025-06-12 03:54:20,152 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 374.0s - 376.0s : score 0.00
+2025-06-12 03:54:20,525 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 376.0s - 381.0s : score 0.00
+2025-06-12 03:54:26,635 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 382.0s - 387.0s : score 0.50
+2025-06-12 03:54:27,114 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 388.0s - 395.0s : score 0.30
+2025-06-12 03:54:27,474 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 397.0s - 399.0s : score 0.00
+2025-06-12 03:54:28,241 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 399.0s - 402.0s : score 0.00
+2025-06-12 03:54:28,651 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 402.0s - 405.0s : score 0.50
+2025-06-12 03:54:29,039 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 405.0s - 408.0s : score 0.20
+2025-06-12 03:54:29,453 - generators.youtube.viral_analyzer - INFO - 🧠 Chunk 411.0s - 414.0s : score 0.50
+2025-06-12 03:54:29,453 - generators.youtube.viral_analyzer - INFO - ✅ 6 chunks viraux retenus avec contexte.
+2025-06-12 03:55:04,488 - __main__ - INFO - ✂️ 6 clips générés
+2025-06-12 03:55:04,488 - generators.youtube.description_generator - INFO - 🧾 Génération de caption pour bot1
+2025-06-12 03:55:04,488 - generators.youtube.description_generator - INFO - 🔮 Génération du hook avec OpenAI
+2025-06-12 03:55:04,488 - generators.youtube.description_generator - DEBUG - 📜 Prompt envoyé :
+Generate a catchy TikTok-style hook (4–6 words max) based on the following transcript:
+
+ Bonsoir à tous ! Allez, je sais ce que vous vous dites ! Bum ! Encore un de beaux gosses !  Allez, c'est parti ! C'est le vous-plaît ! C'est pour les Anki ! C'est parti pour 7 minutes de bonheur !  Monk, moi, je m'appelle Julien Santini et j'ai deux passions dans la vie. Le karaoké, ainsi que les films porno.
+
+It should be intriguing, absurd or funny, like:
+- "This IKEA trick broke my bed"
+- "Even the doctor was shocked"
+- "I found a key in my burger"
+2025-06-12 03:55:04,488 - generators.youtube.description_generator - DEBUG - ⚙️ Modèle = gpt-3.5-turbo, Température = 0.95
+2025-06-12 03:55:05,091 - generators.youtube.description_generator - INFO - ✅ Hook généré : 7 minutes of karaoke paradise
+2025-06-12 03:55:05,092 - generators.youtube.description_generator - INFO - ✅ Hook sauvegardé : series\yt_test\hooks\part_1.txt
+2025-06-12 03:55:05,102 - __main__ - INFO - ✅ Hook copié comme caption TikTok : videos\exports\yt_test\part1_caption.txt

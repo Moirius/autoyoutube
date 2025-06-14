@@ -1,0 +1,3 @@
+2025-06-12 03:38:17,879 - generators.youtube.transcriber - INFO - 📝 Début de transcription : series\yt_test\original.mp4
+2025-06-12 03:38:40,234 - generators.youtube.transcriber - INFO - ✅ Transcription terminée en 22.4s, 68 segments.
+2025-06-12 03:38:40,234 - generators.youtube.transcriber - INFO - 💾 Transcription enregistrée dans : series\yt_test\transcript.txt
