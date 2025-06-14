@@ -1,4 +1,5 @@
 import json
+import os
 from generators.youtube import description_generator
 from generators.youtube.composer import compose_clip
 
@@ -23,10 +24,12 @@ def main_test():
         hook = description_generator.generate_hook(text)
         print(f"➡️ Hook généré : {hook}")
 
-        # Optionnel : génère la vidéo
+        # ✅ CORRECTION ICI : extraire juste le nom du fichier, pas le chemin complet
+        image_filename = os.path.basename(seg["path"])
+
         compose_clip(
             slug=slug,
-            part_filename=seg["path"].split("/")[-1],
+            part_filename=image_filename,
             part_number=idx + 1,
             background_dir="videos/gameplay",
             output_dir="test_data"
