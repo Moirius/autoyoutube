@@ -1,12 +1,20 @@
 from moviepy.editor import *
 from moviepy.config import change_settings
 from utils.logger import get_logger
-from PIL import Image, ImageDraw, ImageColor
+from PIL import Image, ImageDraw, ImageColor, ImageFont
 import numpy as np
-import os, random
+import os, random, shutil
 
 logger = get_logger(__name__)
-change_settings({"IMAGEMAGICK_BINARY": "C:/Program Files/ImageMagick-7.1.1-Q16-HDRI/magick.exe"})
+# Permet de configurer ImageMagick via la variable d'environnement IMAGEMAGICK_BINARY.
+# Par défaut, on utilise la commande "magick". Si elle n'est pas trouvée, on
+# tente d'utiliser "convert" (ImageMagick 6) à la place.
+binary = os.getenv("IMAGEMAGICK_BINARY", "magick")
+if shutil.which(binary) is None:
+    alt = shutil.which("convert")
+    if alt:
+        binary = alt
+change_settings({"IMAGEMAGICK_BINARY": binary})
 
 MODE_TEST = False
 
@@ -14,6 +22,42 @@ def rounded_rect_clip(width, height, radius, color=(255, 255, 255)):
     img = Image.new("RGBA", (width, height), (0, 0, 0, 0))
     draw = ImageDraw.Draw(img)
     draw.rounded_rectangle((0, 0, width, height), radius=radius, fill=color)
+    return ImageClip(np.array(img))
+
+
+def make_text_clip(text: str, font_path: str, font_size: int, color: str,
+                   max_width: int | None = None) -> ImageClip:
+    """Crée un clip texte via Pillow pour éviter d'utiliser ImageMagick."""
+    font = ImageFont.truetype(font_path, font_size)
+    dummy_img = Image.new("RGBA", (10, 10))
+    draw = ImageDraw.Draw(dummy_img)
+
+    lines = []
+    if max_width:
+        words = text.split()
+        line = ""
+        for word in words:
+            test = f"{line} {word}".strip()
+            if draw.textlength(test, font=font) <= max_width:
+                line = test
+            else:
+                if line:
+                    lines.append(line)
+                line = word
+        if line:
+            lines.append(line)
+    else:
+        lines = text.split("\n")
+
+    line_height = draw.textbbox((0, 0), "Ay", font=font)[3]
+    width = max(int(draw.textlength(l, font=font)) for l in lines) or 1
+    height = line_height * len(lines) or 1
+    img = Image.new("RGBA", (width, height), (0, 0, 0, 0))
+    draw = ImageDraw.Draw(img)
+    y = 0
+    for l in lines:
+        draw.text((0, y), l, font=font, fill=color)
+        y += line_height
     return ImageClip(np.array(img))
 
 def compose_clip(slug: str, part_filename: str, part_number: int, background_dir: str = "videos/gameplay", output_dir: str = "series") -> str:
@@ -101,14 +145,13 @@ def compose_clip(slug: str, part_filename: str, part_number: int, background_dir
 
     # === Texte hook ===
     max_txt_width = int(target_width * 0.65)
-    txt_clip = TextClip(overlay_text, fontsize=hook_font_size, font=font_path, color=hook_color, method='caption',
-                        size=(max_txt_width, None)).set_duration(clip_duration)
+    txt_clip = make_text_clip(overlay_text, font_path, hook_font_size, hook_color, max_txt_width).set_duration(clip_duration)
     txt_bg = rounded_rect_clip(txt_clip.w + 30, txt_clip.h + 20, radius=12, color=hook_bg_rgb).set_duration(clip_duration)
     txt_box = CompositeVideoClip([txt_bg.set_position("center"), txt_clip.set_position("center")],
                                  size=(txt_clip.w + 30, txt_clip.h + 20)).set_duration(clip_duration)
 
     # === Badge "Partie X" ===
-    badge_txt = TextClip(f"Partie {part_number}", fontsize=part_font_size, font=font_path, color=part_text_color, method='caption').set_duration(clip_duration)
+    badge_txt = make_text_clip(f"Partie {part_number}", font_path, part_font_size, part_text_color).set_duration(clip_duration)
     badge_bg = rounded_rect_clip(badge_txt.w + 26, badge_txt.h + 12, radius=10, color=badge_rgb).set_duration(clip_duration)
     badge = CompositeVideoClip([badge_bg.set_position("center"), badge_txt.set_position("center")],
                                size=(badge_txt.w + 26, badge_txt.h + 12)).set_duration(clip_duration)
