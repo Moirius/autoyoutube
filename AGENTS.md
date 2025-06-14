@@ -24,7 +24,7 @@ Ce script installe les dépendances Python à partir des fichiers `.whl` déjà 
 
 ```
 libs/
-├── moviepy-1.0.3-py3-none-any.whl
+├── moviepy-2.0.0-py3-none-any.whl
 ├── pillow-9.5.0-py3-none-any.whl
 ├── numpy-1.24.x-*.whl
 ├── tqdm-4.65.0-py3-none-any.whl
