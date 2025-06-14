@@ -1,4 +1,9 @@
-moviepy==2.0.0
+moviepy==1.0.3
 numpy
 pillow<10
 tqdm
+imageio
+imageio-ffmpeg
+decorator
+python-dotenv
+openai
