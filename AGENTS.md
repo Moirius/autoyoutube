@@ -9,21 +9,30 @@ Utilisez les fichiers suivants pour tester sans télécharger de vidéo ni appel
 - `mock_segmets.json` : segments vidéo simulés
 - `mock_part1.png`, `mock_part2.png` : images utilisées à la place de vidéos
 
-## 📦 Dépendances minimales (mode test)
+## 📦 Installation sans accès Internet
 
-Vous pouvez installer uniquement les dépendances nécessaires pour tester localement :
+Codex peut installer les dépendances via le script suivant :
 
 ```bash
-pip install -r requirements_mock.txt
+bash setup.sh
 ```
 
-Contenu du fichier `requirements_mock.txt` :
+Ce script installe les dépendances Python à partir des fichiers `.whl` déjà présents dans le dossier `libs/`.
+
+## 🧱 Contenu attendu du dossier `libs/`
 
 ```
-moviepy==1.0.3
-numpy
-pillow<10
-tqdm
+libs/
+├── moviepy-1.0.3-py3-none-any.whl
+├── pillow-9.5.0-py3-none-any.whl
+├── numpy-1.24.x-*.whl
+├── tqdm-4.65.0-py3-none-any.whl
+```
+
+Si besoin, ces fichiers peuvent être générés avec :
+
+```bash
+pip download moviepy==1.0.3 pillow==9.5.0 tqdm numpy -d libs/
 ```
 
 ## ⚙️ Variables d'environnement recommandées
