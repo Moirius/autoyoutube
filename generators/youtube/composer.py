@@ -3,10 +3,19 @@ from moviepy.config import change_settings
 from utils.logger import get_logger
 from PIL import Image, ImageDraw, ImageColor
 import numpy as np
-import os, random
+import os, random, shutil
 
 logger = get_logger(__name__)
-change_settings({"IMAGEMAGICK_BINARY": "C:/Program Files/ImageMagick-7.1.1-Q16-HDRI/magick.exe"})
+
+# Recherche dynamique de l'exécutable ImageMagick pour rester compatible Linux/Windows
+default_magick = r"C:/Program Files/ImageMagick-7.1.1-Q16-HDRI/magick.exe"
+im_bin = (
+    os.environ.get("IMAGEMAGICK_BINARY")
+    or shutil.which("magick")
+    or shutil.which("convert")
+    or default_magick
+)
+change_settings({"IMAGEMAGICK_BINARY": im_bin})
 
 MODE_TEST = False
 

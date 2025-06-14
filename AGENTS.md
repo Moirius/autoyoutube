@@ -8,7 +8,7 @@ Utilisez les fichiers suivants pour tester sans télécharger de vidéo ni appel
 
 - `test_data/mock_transcript.txt` : transcript texte simulé  
 - `test_data/mock_segments.json` : segments vidéo simulés  
-- `test_data/mock_part1.png`, `test_data/mock_part2.png` : images utilisées à la place de vidéos
+- `test_data/test/parts/mock_part1.png`, `test_data/test/parts/mock_part2.png` : images utilisées à la place de vidéos
 
 ## 📦 Installation automatique via Internet (recommandé)
 
