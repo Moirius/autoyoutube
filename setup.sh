@@ -9,5 +9,3 @@ pip install ./libs/imageio-2.37.0-*.whl
 pip install ./libs/imageio_ffmpeg-0.6.0-*.whl
 pip install ./libs/python_dotenv-1.0.0-*.whl
 pip install ./libs/moviepy-2.0.0-*.whl
-
-
