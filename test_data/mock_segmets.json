@@ -2,11 +2,11 @@
   {
     "start": 0.0,
     "end": 5.0,
-    "path": "test_data/mock_part1.png"
+    "path": "test/parts/mock_part1.png"
   },
   {
     "start": 5.0,
     "end": 10.0,
-    "path": "test_data/mock_part2.png"
+    "path": "test/parts/mock_part2.png"
   }
 ]
