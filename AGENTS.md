@@ -53,6 +53,22 @@ $env:MOCK_OPENAI = "true"
 
 Cela permet à `description_generator.py` d’utiliser un simulateur local au lieu de l’API OpenAI.
 
+## ✅ Vérification de la clé OpenAI
+
+Après avoir défini la variable `OPENAI_API_KEY`, vous pouvez vérifier que l'accès
+à l'API fonctionne avec la commande suivante :
+
+```bash
+python - <<'PY'
+from openai import OpenAI
+import os
+client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
+print(client.models.list())
+PY
+```
+
+Si la liste des modèles s'affiche sans erreur, la clé est valide.
+
 ## 🚀 Lancement de test
 
 Une fois les dépendances installées, vous pouvez tester le projet avec :
