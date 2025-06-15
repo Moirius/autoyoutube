@@ -29,7 +29,8 @@ def main(youtube_url, slug):
         logger.info(f"📝 Transcription obtenue ({len(transcript)} segments)")
 
         # 3. Analyse virale
-        viral_segments = analyze_transcript(transcript)
+        max_segments = int(os.environ.get("MAX_SEGMENTS", 5))
+        viral_segments = analyze_transcript(transcript, max_segments=max_segments)
         if not viral_segments:
             logger.warning("⚠️ Aucun segment viral détecté, fallback sur découpe aléatoire.")
             segments = slicer.slice_video(slug)

@@ -28,35 +28,52 @@ def group_transcript(transcript, window=90, step=45):
 
 
 def heuristic_score(text: str) -> float:
-    """Calcule un score simple à partir du texte seul."""
+    """Retourne un score de viralité basé uniquement sur le texte."""
     score = 0.0
     lower = text.lower()
 
-    if "!" in text or "?" in text:
-        score += 0.3
+    # Ponctuation expressive
+    punct_count = text.count("!") + text.count("?")
+    score += min(punct_count * 0.1, 0.3)
 
-    keywords = [
-        "incroyable",
-        "wow",
-        "génial",
-        "impressionnant",
-        "hilarant",
-        "surprenant",
-    ]
-    if any(k in lower for k in keywords):
-        score += 0.4
+    # Mots clés typiques de réactions fortes
+    keywords = {
+        "incroyable": 0.25,
+        "wow": 0.25,
+        "génial": 0.2,
+        "impressionnant": 0.2,
+        "hilarant": 0.25,
+        "surprenant": 0.2,
+        "dingue": 0.2,
+        "ouf": 0.2,
+    }
+    for word, weight in keywords.items():
+        if word in lower:
+            score += weight
 
-    words = len(text.split())
-    score += min(words / 50.0, 0.3)
+    # Longueur et rythme
+    words = len(re.findall(r"\w+", text))
+    if 10 <= words <= 80:
+        score += 0.2
+    score += min(words / 100.0, 0.2)
+
+    # Mise en avant (MAJUSCULES)
+    if text:
+        upper_ratio = sum(c.isupper() for c in text) / len(text)
+        score += min(upper_ratio * 2, 0.2)
 
     return min(score, 1.0)
 
-def analyze_transcript(transcript, min_score=0.65):
-    """
-    Analyse des fenêtres de texte pour détecter les moments forts avec GPT.
+def analyze_transcript(transcript, min_score=0.65, max_segments=5):
+    """Analyse la transcription et renvoie les meilleurs segments.
+
+    Si l'API OpenAI est disponible, celle-ci est sollicitée pour noter chaque
+    passage. En cas d'échec ou si l'API est désactivée, une heuristique locale
+    prend le relais. Les segments sont ensuite triés par score et filtrés pour
+    éviter les chevauchements.
     """
     chunks = group_transcript(transcript)
-    selected = []
+    candidates = []
 
     use_ai = os.getenv("MOCK_OPENAI", "false").lower() != "true"
 
@@ -91,7 +108,7 @@ def analyze_transcript(transcript, min_score=0.65):
                     start = float(match.group(2))
                     end = float(match.group(3))
                     if score >= min_score and end > start:
-                        selected.append(
+                        candidates.append(
                             {
                                 "score": min(score, 1),
                                 "start": max(start, 0),
@@ -113,7 +130,7 @@ def analyze_transcript(transcript, min_score=0.65):
         # Fallback heuristique
         score = heuristic_score(chunk["text"])
         if score >= min_score:
-            selected.append(
+            candidates.append(
                 {
                     "score": score,
                     "start": chunk["start"],
@@ -123,6 +140,16 @@ def analyze_transcript(transcript, min_score=0.65):
             logger.info(
                 f"✨ Heuristique clip {chunk['start']:.1f}s → {chunk['end']:.1f}s (score {score:.2f})"
             )
+
+    # Tri par score et suppression des chevauchements
+    candidates.sort(key=lambda c: c["score"], reverse=True)
+    selected = []
+    for cand in candidates:
+        if len(selected) >= max_segments:
+            break
+        overlap = any(not (cand["end"] <= s["start"] or cand["start"] >= s["end"]) for s in selected)
+        if not overlap:
+            selected.append(cand)
 
     logger.info(f"✅ {len(selected)} moments viraux retenus.")
     return selected
