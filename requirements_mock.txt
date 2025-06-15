@@ -1,6 +1,6 @@
 moviepy==1.0.3
 numpy
-pillow<10
+pillow==10.2.0
 tqdm
 imageio
 imageio-ffmpeg

@@ -2,6 +2,11 @@ from moviepy.editor import *
 from moviepy.config import change_settings
 from utils.logger import get_logger
 from PIL import Image, ImageDraw, ImageColor
+
+# Pillow 10 a supprimé la constante ANTIALIAS. On la rétablit pour
+# rester compatible avec moviepy qui l'utilise encore.
+if not hasattr(Image, "ANTIALIAS"):
+    Image.ANTIALIAS = Image.Resampling.LANCZOS
 import numpy as np
 import os, random, shutil
 
@@ -110,24 +115,66 @@ def compose_clip(slug: str, part_filename: str, part_number: int, background_dir
 
     # === Texte hook ===
     max_txt_width = int(target_width * 0.65)
-    txt_clip = TextClip(overlay_text, fontsize=hook_font_size, font=font_path, color=hook_color, method='caption',
-                        size=(max_txt_width, None)).set_duration(clip_duration)
-    txt_bg = rounded_rect_clip(txt_clip.w + 30, txt_clip.h + 20, radius=12, color=hook_bg_rgb).set_duration(clip_duration)
-    txt_box = CompositeVideoClip([txt_bg.set_position("center"), txt_clip.set_position("center")],
-                                 size=(txt_clip.w + 30, txt_clip.h + 20)).set_duration(clip_duration)
+    try:
+        txt_clip = TextClip(
+            overlay_text,
+            fontsize=hook_font_size,
+            font=font_path,
+            color=hook_color,
+            method="caption",
+            size=(max_txt_width, None),
+        ).set_duration(clip_duration)
+        txt_bg = rounded_rect_clip(txt_clip.w + 30, txt_clip.h + 20, radius=12, color=hook_bg_rgb).set_duration(clip_duration)
+        txt_box = CompositeVideoClip(
+            [txt_bg.set_position("center"), txt_clip.set_position("center")],
+            size=(txt_clip.w + 30, txt_clip.h + 20),
+        ).set_duration(clip_duration)
+    except OSError as e:
+        logger.warning(
+            "⚠️ ImageMagick introuvable, aucune incrustation de texte : %s", e
+        )
+        txt_box = None
 
     # === Badge "Partie X" ===
-    badge_txt = TextClip(f"Partie {part_number}", fontsize=part_font_size, font=font_path, color=part_text_color, method='caption').set_duration(clip_duration)
-    badge_bg = rounded_rect_clip(badge_txt.w + 26, badge_txt.h + 12, radius=10, color=badge_rgb).set_duration(clip_duration)
-    badge = CompositeVideoClip([badge_bg.set_position("center"), badge_txt.set_position("center")],
-                               size=(badge_txt.w + 26, badge_txt.h + 12)).set_duration(clip_duration)
+    try:
+        badge_txt = TextClip(
+            f"Partie {part_number}",
+            fontsize=part_font_size,
+            font=font_path,
+            color=part_text_color,
+            method="caption",
+        ).set_duration(clip_duration)
+        badge_bg = rounded_rect_clip(badge_txt.w + 26, badge_txt.h + 12, radius=10, color=badge_rgb).set_duration(clip_duration)
+        badge = CompositeVideoClip(
+            [badge_bg.set_position("center"), badge_txt.set_position("center")],
+            size=(badge_txt.w + 26, badge_txt.h + 12),
+        ).set_duration(clip_duration)
+    except OSError as e:
+        logger.warning(
+            "⚠️ ImageMagick introuvable, badge 'Partie' désactivé : %s", e
+        )
+        badge = None
 
-    group = CompositeVideoClip([
-        badge.set_position((0, badge_y)),
-        txt_box.set_position((badge.w + 10, hook_y))
-    ], size=(badge.w + 10 + txt_box.w, max(badge.h + badge_y, txt_box.h + hook_y))).set_duration(clip_duration)
+    elements = []
+    width = target_width
+    height = 0
 
-    final = CompositeVideoClip([stacked, group], size=(target_width, target_height)).set_duration(clip_duration)
+    x_offset = 0
+    if badge is not None:
+        elements.append(badge.set_position((0, badge_y)))
+        x_offset = badge.w
+        height = max(height, badge.h + badge_y)
+
+    if txt_box is not None:
+        elements.append(txt_box.set_position((x_offset + 10 if badge else 0, hook_y)))
+        width = (x_offset + 10 if badge else 0) + txt_box.w
+        height = max(height, txt_box.h + hook_y)
+
+    if elements:
+        group = CompositeVideoClip(elements, size=(width, height)).set_duration(clip_duration)
+        final = CompositeVideoClip([stacked, group], size=(target_width, target_height)).set_duration(clip_duration)
+    else:
+        final = stacked
 
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
     final.write_videofile(output_path, codec="libx264", audio_codec="aac",
