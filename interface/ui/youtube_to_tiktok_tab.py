@@ -34,6 +34,7 @@ def render_tab():
     whisper_model = st.selectbox("Modèle Whisper", ["tiny", "small", "medium", "large"], index=1)
     min_dur = st.slider("Durée minimale du clip (s)", 10, 90, 45)
     max_dur = st.slider("Durée maximale du clip (s)", 30, 150, 75)
+    max_segments = st.slider("Nombre max de segments viraux", 1, 10, 5)
     gpt_model = st.selectbox("Modèle GPT pour le hook", ["gpt-3.5-turbo", "gpt-4"], index=0)
     font_path = st.text_input("Police (TTF)", value="fonts/BebasNeue-Regular.ttf")
     hook_font_size = st.slider("Taille du texte hook", 24, 72, 42)
@@ -73,6 +74,7 @@ def render_tab():
             "WHISPER_MODEL": whisper_model,
             "MIN_DUR": min_dur,
             "MAX_DUR": max_dur,
+            "MAX_SEGMENTS": max_segments,
             "HOOK_GPT_MODEL": gpt_model,
             "FONT_PATH": font_path,
             "HOOK_FONT_SIZE": hook_font_size,
