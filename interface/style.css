@@ -1,0 +1,15 @@
+body {
+    background-color: #f7f9fc;
+}
+
+h1, h2, h3 {
+    color: #ff4b4b;
+}
+
+.stButton>button {
+    background-color: #ff4b4b;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 0.4rem 0.8rem;
+}

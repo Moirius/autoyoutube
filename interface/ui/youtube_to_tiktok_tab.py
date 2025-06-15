@@ -6,7 +6,7 @@ from utils.logger import get_logger
 
 logger = get_logger("YT_Tab")
 
-# 🔧 Spécifie ici ton exécutable Python utilisé pour lancer le pipeline
+# 🔧 Chemin par défaut de l'exécutable Python utilisé pour lancer le pipeline
 PYTHON_EXECUTABLE_PATH = r"D:\betisespython\tiktokbot\venv\Scripts\python.exe"
 
 def run_command(label, command_list, env_vars=None):
@@ -29,27 +29,36 @@ def render_tab():
 
     yt_url = st.text_input("URL YouTube")
     slug = st.text_input("Nom du projet (slug)", value="yt_1")
+    python_exec = st.text_input("Exécutable Python", value=PYTHON_EXECUTABLE_PATH)
 
     st.markdown("### 🎛️ Paramètres personnalisables")
-    whisper_model = st.selectbox("Modèle Whisper", ["tiny", "small", "medium", "large"], index=1)
-    min_dur = st.slider("Durée minimale du clip (s)", 10, 90, 45)
-    max_dur = st.slider("Durée maximale du clip (s)", 30, 150, 75)
-    max_segments = st.slider("Nombre max de segments viraux", 1, 10, 5)
-    gpt_model = st.selectbox("Modèle GPT pour le hook", ["gpt-3.5-turbo", "gpt-4"], index=0)
-    font_path = st.text_input("Police (TTF)", value="fonts/BebasNeue-Regular.ttf")
-    hook_font_size = st.slider("Taille du texte hook", 24, 72, 42)
-    part_font_size = st.slider("Taille du badge Partie", 24, 72, 38)
-    hook_color = st.color_picker("Couleur texte hook", "#000000")
-    badge_color = st.color_picker("Couleur badge Partie", "#C84628")
-    part_text_color = st.color_picker("Couleur texte Partie", "#FFFFFF")
-    hook_bg_color = st.color_picker("Couleur fond Hook", "#FFFFFF")
-    hook_y = st.slider("Position verticale texte hook (px)", 0, 1280, 590)
-    badge_y = st.slider("Position verticale badge Partie (px)", 0, 1280, 640)
+    col1, col2 = st.columns(2)
+
+    with col1:
+        whisper_model = st.selectbox("Modèle Whisper", ["tiny", "small", "medium", "large"], index=1)
+        min_dur = st.slider("Durée minimale du clip (s)", 10, 90, 45)
+        max_dur = st.slider("Durée maximale du clip (s)", 30, 150, 75)
+        max_segments = st.slider("Nombre max de segments viraux", 1, 10, 5)
+        gpt_model = st.selectbox("Modèle GPT pour le hook", ["gpt-3.5-turbo", "gpt-4"], index=0)
+        hook_temp = st.slider("Température hook", 0.0, 1.0, 0.95, 0.05)
+        caption_model = st.selectbox("Modèle GPT pour caption", ["gpt-3.5-turbo", "gpt-4"], index=0)
+        caption_temp = st.slider("Température caption", 0.0, 1.0, 0.95, 0.05)
+
+    with col2:
+        font_path = st.text_input("Police (TTF)", value="fonts/BebasNeue-Regular.ttf")
+        hook_font_size = st.slider("Taille du texte hook", 24, 72, 42)
+        part_font_size = st.slider("Taille du badge Partie", 24, 72, 38)
+        hook_color = st.color_picker("Couleur texte hook", "#000000")
+        badge_color = st.color_picker("Couleur badge Partie", "#C84628")
+        part_text_color = st.color_picker("Couleur texte Partie", "#FFFFFF")
+        hook_bg_color = st.color_picker("Couleur fond Hook", "#FFFFFF")
+        hook_y = st.slider("Position verticale texte hook (px)", 0, 1280, 590)
+        badge_y = st.slider("Position verticale badge Partie (px)", 0, 1280, 640)
 
     # 🔍 Tester environnement Python
     if st.button("🧪 Tester l’environnement Python"):
         test_script = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "print_env.py"))
-        command = [PYTHON_EXECUTABLE_PATH, test_script]
+        command = [python_exec, test_script]
         run_command("Test Environnement Python", command)
 
     # 🚀 Lancer pipeline
@@ -68,7 +77,7 @@ def render_tab():
             st.error(f"❌ Fichier main.py introuvable à : {main_path}")
             return
 
-        command = [PYTHON_EXECUTABLE_PATH, main_path, yt_url_clean, slug_clean]
+        command = [python_exec, main_path, yt_url_clean, slug_clean]
 
         env = {
             "WHISPER_MODEL": whisper_model,
@@ -76,6 +85,9 @@ def render_tab():
             "MAX_DUR": max_dur,
             "MAX_SEGMENTS": max_segments,
             "HOOK_GPT_MODEL": gpt_model,
+            "HOOK_TEMP": hook_temp,
+            "TIKTOK_CAPTION_MODEL": caption_model,
+            "TIKTOK_CAPTION_TEMP": caption_temp,
             "FONT_PATH": font_path,
             "HOOK_FONT_SIZE": hook_font_size,
             "PART_FONT_SIZE": part_font_size,
